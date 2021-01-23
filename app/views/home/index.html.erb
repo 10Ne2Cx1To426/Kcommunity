@@ -1,2 +1,55 @@
-<h1>Home#index</h1>
-<p>Find me in app/views/home/index.html.erb</p>
+<div class="index-body">
+  <div class="container">
+    <div class="image-wrap">
+       <div class="head-image">
+         <div class="slide">
+          <%= image_tag "NCT.jpg", class:"img", alt:"nct", width: 800 %>
+          <%= image_tag "BTS.jpg", class:"img", alt:"bts" %>
+          <%= image_tag "SEVENTEEN.jpg", class:"img", alt:"seventeen" %>
+          <%= image_tag "Stray kids.jpg", class:"img", alt:"skz" %>
+          <%= image_tag "TXT.jpg", class:"img", alt:"txt" %>
+         </div>
+       </div>
+    </div>
+    <div class="event-wrap">
+      <div class="event-contain">
+        <div class="event-title">
+          <h1>EVENTS</h1>
+          <%#= image_tag "events.png", class: :event_title %>
+        </div>
+        <ul class="event-images">
+          <% @events.each do |event| %>
+            <li class="image">
+            <%= link_to image_tag(event.image, class: :image, width: 426, height: 418), event_path(event) %>
+            <%#= event.name %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+    <div class="indent-wrap">
+    </div>
+    <div class="community-wrap">
+      <div class="community-container">
+        <div class="community-title">
+          <h1>COMMUNITY</h1>
+          <%#= image_tag "community.png", class: :community_title %>
+        </div>
+        <div class="community-content">
+          <ul class="community-images">
+            <% @groups.each do |group| %>
+              <li class="c-image">
+                 <div class="community-image">
+                   <%= link_to image_tag(group.image, class: :img, wigth: 426, height: 418), group_messages_path(group) %>
+                 <div>
+                 <%#= group.text %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="last-indent-wrap">
+    </div>
+  </div>
+</div>

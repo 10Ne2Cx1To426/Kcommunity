@@ -1,15 +1,51 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Kcommunity</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="ファン同士の交流を応援">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>K-Community</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.18.1/build/cssreset/cssreset-min.css">
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP:400,700,900&display=swap" rel="stylesheet">
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
+    <header>
+      <div class="inner">
+        <div class="top">
+          <div class="logo">
+            <%= link_to image_tag("lo-go.png", class: "logo", height: 30), root_path %>
+          </div>
+          <div class="btn">
+            <% if user_signed_in? %>
+              <div class="btn__right">
+                <%= link_to 'LOG OUT', destroy_user_session_path, method: :delete, class: "btn" %>
+                <%= link_to 'MY PAGE', user_path(current_user.id), class: "btn" %>
+              </div>
+            <% else %>
+              <div class="btn__right">
+                <%= link_to 'LOG IN', new_user_session_path, class: "btn" %>
+                <%= link_to 'SIGN UP', new_user_registration_path, class: "btn" %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+        <div class="bottom">
+          <ul class="links">
+            <li><%= link_to 'EVENTS', events_path %></li>
+            <li><%= link_to 'COMMUNITY', groups_path %></li>
+            <li><%= link_to 'FRIENDS', users_path %></li>
+          </ul>
+        <div>
+      </div>
+    </header>
     <%= yield %>
+    <div class="footer">
+      <div>@Copy right<div>
+    </div>
   </body>
 </html>

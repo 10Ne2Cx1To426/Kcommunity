@@ -1,0 +1,49 @@
+<h1>ユーザーページ</h1>
+<% if @user.image.attached? %>
+  <%= image_tag @user.image.variant(resize: '500x500') %>
+<% end %>
+名前：<%= @user.nickname %>
+<% if @user.id == current_user.id %>
+  <%= link_to '登録情報を編集する', edit_user_path(current_user) %>
+<% end %>
+自己紹介<br>
+<%= @user.text %>
+<br>
+<% if @user.id == current_user.id %>
+  お気に入りしたコミュニティ<br>
+  <% @favorites.each do |f| %>
+    <p><%= link_to f.group.name, group_messages_path(f.group.id) %></p>
+  <% end %>
+  <br>
+  参加予定のイベント
+  <% @joins.each do |j| %>
+    <%= link_to j.event.name, event_path(j.event.id) %>
+  <% end %>
+<% end %>
+<br>
+開催予定のイベント
+<% @events.each do |e| %>
+  <%= link_to e.name, event_path(e.id) %><br>
+<% end %>
+
+
+<% if current_user != @user %>
+  <% if @user.followed_by?(current_user) %>
+      <p><%=link_to "フォロー済み", user_relationships_path(@user.id), method: :delete %></p>
+  <% else %>
+      <p><%=link_to "フォローする", user_relationships_path(@user.id), method: :post %></p>
+  <% end %>
+
+  <% if (current_user.followed_by? @user) && (@user.followed_by? current_user) %>
+    <% if @isRoom == true %>
+      <%= link_to 'Direct Message', room_path(@roomId) %>
+    <% else %>
+      <%= form_with model: @room, local: true do |f| %>
+        <%= fields_for @entry, local: true do |e| %>
+          <%= e.hidden_field :user_id, value: @user.id %>
+        <% end %>
+        <%= f.submit "チャットを始める", class:"btn btn-primary btn-lg user-show-chat"%>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>
